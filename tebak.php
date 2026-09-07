@@ -5,6 +5,7 @@ session_start();
 if (!isset($_SESSION['angka'])) {
     $_SESSION['angka'] = rand(1, 5);
     $_SESSION['percobaan'] = 0;
+    $_SESSION['riwayat'] = [];
 }
 
 $x = $_SESSION['angka'];
@@ -27,6 +28,9 @@ if (isset($_POST['tebak'])) {
     } else {
 
         $_SESSION['percobaan']++;
+
+        // Menyimpan tebakan ke dalam riwayat
+        $_SESSION['riwayat'][] = $tebakan;
 
         $percobaan = $_SESSION['percobaan'];
         $jumlah_percobaan = $percobaan;
@@ -67,6 +71,7 @@ if (isset($_POST['main_lagi'])) {
 
     $_SESSION['angka'] = rand(1, 5);
     $_SESSION['percobaan'] = 0;
+    $_SESSION['riwayat'] = [];
 
     $x = $_SESSION['angka'];
     $jumlah_percobaan = 0;
@@ -211,6 +216,36 @@ if (isset($_POST['main_lagi'])) {
             color: #991b1b;
         }
 
+        .riwayat {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 12px;
+            text-align: left;
+        }
+
+        .riwayat h3 {
+            color: #333;
+            font-size: 15px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .daftar-tebakan {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .angka-tebakan {
+            background: #e0e7ff;
+            color: #4338ca;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
         .main-lagi {
             margin-top: 12px;
             background: #22c55e;
@@ -293,6 +328,29 @@ if (isset($_POST['main_lagi'])) {
         <div class="hasil <?php echo $jenis_pesan; ?>">
 
             <?php echo $pesan; ?>
+
+        </div>
+
+    <?php } ?>
+
+    <?php if (!empty($_SESSION['riwayat'])) { ?>
+
+        <div class="riwayat">
+
+            <h3>📋 Riwayat Tebakan</h3>
+
+            <div class="daftar-tebakan">
+
+                <?php foreach ($_SESSION['riwayat'] as $nomor => $nilai) { ?>
+
+                    <div class="angka-tebakan">
+                        Percobaan <?php echo $nomor + 1; ?>:
+                        <?php echo $nilai; ?>
+                    </div>
+
+                <?php } ?>
+
+            </div>
 
         </div>
 
