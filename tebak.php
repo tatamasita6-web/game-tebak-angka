@@ -55,9 +55,11 @@ if (isset($_POST['tebak'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Game Tebak Angka</title>
 
     <style>
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -161,6 +163,7 @@ if (isset($_POST['tebak'])) {
             color: #999;
             font-size: 12px;
         }
+
     </style>
 </head>
 
@@ -201,9 +204,11 @@ if (isset($_POST['tebak'])) {
     </form>
 
     <?php if ($pesan != "") { ?>
+
         <div class="hasil <?php echo $jenis_pesan; ?>">
             <?php echo $pesan; ?>
         </div>
+
     <?php } ?>
 
     <div class="footer">
@@ -214,4 +219,3 @@ if (isset($_POST['tebak'])) {
 
 </body>
 </html>
-```
