@@ -14,12 +14,14 @@ $jenis_pesan = "";
 $jumlah_percobaan = $_SESSION['percobaan'];
 $sisa_kesempatan = 3 - $jumlah_percobaan;
 $game_selesai = false;
+$pesan_selesai = "";
 
+// Proses tebakan
 if (isset($_POST['tebak'])) {
 
     $tebakan = $_POST['tebak'];
 
-    // Validasi agar angka hanya 1 sampai 5
+    // Validasi angka
     if ($tebakan < 1 || $tebakan > 5) {
 
         $pesan = "⚠️ Masukkan angka antara 1 sampai 5.";
@@ -29,7 +31,7 @@ if (isset($_POST['tebak'])) {
 
         $_SESSION['percobaan']++;
 
-        // Menyimpan tebakan ke dalam riwayat
+        // Menyimpan tebakan ke riwayat
         $_SESSION['riwayat'][] = $tebakan;
 
         $percobaan = $_SESSION['percobaan'];
@@ -40,27 +42,33 @@ if (isset($_POST['tebak'])) {
 
             $pesan = "🎉 Tebakan Anda Benar!<br>
                       Angka yang benar adalah <strong>$x</strong>";
+
             $jenis_pesan = "benar";
             $game_selesai = true;
+            $pesan_selesai = "🏆 Selamat! Kamu berhasil menebak angka rahasia!";
 
         } elseif ($percobaan >= 3) {
 
             $pesan = "😢 Tebakan Anda Salah!<br>
                       Kesempatan Anda sudah habis.<br>
                       Angka yang benar adalah <strong>$x</strong>";
+
             $jenis_pesan = "salah";
             $game_selesai = true;
+            $pesan_selesai = "🎮 Permainan selesai. Coba lagi untuk mendapatkan angka baru!";
 
         } elseif ($tebakan < $x) {
 
             $pesan = "❌ Tebakan Anda Salah!<br>
                       💡 Petunjuk: Angka rahasia <strong>lebih besar</strong>.";
+
             $jenis_pesan = "salah";
 
         } else {
 
             $pesan = "❌ Tebakan Anda Salah!<br>
                       💡 Petunjuk: Angka rahasia <strong>lebih kecil</strong>.";
+
             $jenis_pesan = "salah";
         }
     }
@@ -79,6 +87,7 @@ if (isset($_POST['main_lagi'])) {
     $pesan = "";
     $jenis_pesan = "";
     $game_selesai = false;
+    $pesan_selesai = "";
 }
 ?>
 
@@ -216,6 +225,16 @@ if (isset($_POST['main_lagi'])) {
             color: #991b1b;
         }
 
+        .selesai {
+            margin-top: 12px;
+            padding: 12px;
+            background: #fff7ed;
+            color: #9a3412;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
         .riwayat {
             margin-top: 20px;
             padding: 15px;
@@ -333,6 +352,16 @@ if (isset($_POST['main_lagi'])) {
 
     <?php } ?>
 
+    <?php if ($game_selesai && $pesan_selesai != "") { ?>
+
+        <div class="selesai">
+
+            <?php echo $pesan_selesai; ?>
+
+        </div>
+
+    <?php } ?>
+
     <?php if (!empty($_SESSION['riwayat'])) { ?>
 
         <div class="riwayat">
@@ -344,8 +373,10 @@ if (isset($_POST['main_lagi'])) {
                 <?php foreach ($_SESSION['riwayat'] as $nomor => $nilai) { ?>
 
                     <div class="angka-tebakan">
+
                         Percobaan <?php echo $nomor + 1; ?>:
                         <?php echo $nilai; ?>
+
                     </div>
 
                 <?php } ?>
