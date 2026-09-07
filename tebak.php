@@ -13,39 +13,47 @@ $jenis_pesan = "";
 
 if (isset($_POST['tebak'])) {
 
-    $_SESSION['percobaan']++;
-
     $tebakan = $_POST['tebak'];
-    $percobaan = $_SESSION['percobaan'];
 
-    if ($tebakan == $x) {
-
-        $pesan = "🎉 Tebakan Anda Benar!<br>
-                  Angka yang benar adalah <strong>$x</strong>";
-        $jenis_pesan = "benar";
-
-        // Reset game
-        unset($_SESSION['angka']);
-        unset($_SESSION['percobaan']);
-
-    } elseif ($percobaan >= 3) {
-
-        $pesan = "😢 Tebakan Anda Salah!<br>
-                  Kesempatan Anda sudah habis.<br>
-                  Angka yang benar adalah <strong>$x</strong>";
+    // Validasi agar angka hanya 1 sampai 5
+    if ($tebakan < 1 || $tebakan > 5) {
+        $pesan = "⚠️ Masukkan angka antara 1 sampai 5.";
         $jenis_pesan = "salah";
-
-        // Reset game
-        unset($_SESSION['angka']);
-        unset($_SESSION['percobaan']);
-
     } else {
 
-        $sisa = 3 - $percobaan;
+        $_SESSION['percobaan']++;
 
-        $pesan = "❌ Tebakan Anda Salah!<br>
-                  Anda masih memiliki <strong>$sisa kesempatan</strong>.";
-        $jenis_pesan = "salah";
+        $percobaan = $_SESSION['percobaan'];
+
+        if ($tebakan == $x) {
+
+            $pesan = "🎉 Tebakan Anda Benar!<br>
+                      Angka yang benar adalah <strong>$x</strong>";
+            $jenis_pesan = "benar";
+
+            // Reset game
+            unset($_SESSION['angka']);
+            unset($_SESSION['percobaan']);
+
+        } elseif ($percobaan >= 3) {
+
+            $pesan = "😢 Tebakan Anda Salah!<br>
+                      Kesempatan Anda sudah habis.<br>
+                      Angka yang benar adalah <strong>$x</strong>";
+            $jenis_pesan = "salah";
+
+            // Reset game
+            unset($_SESSION['angka']);
+            unset($_SESSION['percobaan']);
+
+        } else {
+
+            $sisa = 3 - $percobaan;
+
+            $pesan = "❌ Tebakan Anda Salah!<br>
+                      Anda masih memiliki <strong>$sisa kesempatan</strong>.";
+            $jenis_pesan = "salah";
+        }
     }
 }
 ?>
@@ -55,11 +63,9 @@ if (isset($_POST['tebak'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Game Tebak Angka</title>
 
     <style>
-
         * {
             box-sizing: border-box;
             margin: 0;
@@ -163,7 +169,6 @@ if (isset($_POST['tebak'])) {
             color: #999;
             font-size: 12px;
         }
-
     </style>
 </head>
 
