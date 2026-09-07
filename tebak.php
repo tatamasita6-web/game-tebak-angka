@@ -10,6 +10,7 @@ if (!isset($_SESSION['angka'])) {
 $x = $_SESSION['angka'];
 $pesan = "";
 $jenis_pesan = "";
+$jumlah_percobaan = $_SESSION['percobaan'];
 
 if (isset($_POST['tebak'])) {
 
@@ -17,13 +18,16 @@ if (isset($_POST['tebak'])) {
 
     // Validasi agar angka hanya 1 sampai 5
     if ($tebakan < 1 || $tebakan > 5) {
+
         $pesan = "⚠️ Masukkan angka antara 1 sampai 5.";
         $jenis_pesan = "salah";
+
     } else {
 
         $_SESSION['percobaan']++;
 
         $percobaan = $_SESSION['percobaan'];
+        $jumlah_percobaan = $percobaan;
 
         if ($tebakan == $x) {
 
@@ -60,12 +64,17 @@ if (isset($_POST['tebak'])) {
 
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Game Tebak Angka</title>
 
     <style>
+
         * {
             box-sizing: border-box;
             margin: 0;
@@ -114,6 +123,15 @@ if (isset($_POST['tebak'])) {
             color: #555;
             font-size: 14px;
             line-height: 1.6;
+        }
+
+        .percobaan {
+            background: #eef2ff;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            color: #4f46e5;
+            font-weight: bold;
         }
 
         input {
@@ -169,7 +187,9 @@ if (isset($_POST['tebak'])) {
             color: #999;
             font-size: 12px;
         }
+
     </style>
+
 </head>
 
 <body>
@@ -185,10 +205,20 @@ if (isset($_POST['tebak'])) {
     </p>
 
     <div class="aturan">
+
         <strong>📌 Aturan Permainan</strong><br>
+
         • Angka berada di antara 1–5<br>
         • Kamu memiliki 3 kesempatan<br>
         • Angka rahasia tidak akan berubah
+
+    </div>
+
+    <div class="percobaan">
+
+        Percobaan:
+        <?php echo $jumlah_percobaan; ?>/3
+
     </div>
 
     <form method="post">
@@ -211,16 +241,21 @@ if (isset($_POST['tebak'])) {
     <?php if ($pesan != "") { ?>
 
         <div class="hasil <?php echo $jenis_pesan; ?>">
+
             <?php echo $pesan; ?>
+
         </div>
 
     <?php } ?>
 
     <div class="footer">
+
         Game Tebak Angka • PHP
+
     </div>
 
 </div>
 
 </body>
+
 </html>
