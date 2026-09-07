@@ -117,10 +117,12 @@ if (isset($_POST['main_lagi'])) {
             justify-content: center;
             align-items: center;
             background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 20px;
         }
 
         .container {
             width: 400px;
+            max-width: 100%;
             background: white;
             padding: 35px;
             border-radius: 20px;
@@ -246,8 +248,15 @@ if (isset($_POST['main_lagi'])) {
         .riwayat h3 {
             color: #333;
             font-size: 15px;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             text-align: center;
+        }
+
+        .keterangan-riwayat {
+            color: #777;
+            font-size: 12px;
+            text-align: center;
+            margin-bottom: 12px;
         }
 
         .daftar-tebakan {
@@ -263,6 +272,7 @@ if (isset($_POST['main_lagi'])) {
             padding: 8px 12px;
             border-radius: 8px;
             font-weight: bold;
+            font-size: 13px;
         }
 
         .main-lagi {
@@ -278,6 +288,18 @@ if (isset($_POST['main_lagi'])) {
             margin-top: 20px;
             color: #999;
             font-size: 12px;
+        }
+
+        @media (max-width: 450px) {
+
+            .container {
+                padding: 25px 20px;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
         }
 
     </style>
@@ -310,13 +332,23 @@ if (isset($_POST['main_lagi'])) {
     <div class="status-game">
 
         <div class="status-box">
+
             Percobaan
-            <span><?php echo $jumlah_percobaan; ?>/3</span>
+
+            <span>
+                <?php echo $jumlah_percobaan; ?>/3
+            </span>
+
         </div>
 
         <div class="status-box">
+
             Kesempatan
-            <span><?php echo $sisa_kesempatan; ?></span>
+
+            <span>
+                <?php echo $sisa_kesempatan; ?>
+            </span>
+
         </div>
 
     </div>
@@ -367,6 +399,10 @@ if (isset($_POST['main_lagi'])) {
         <div class="riwayat">
 
             <h3>📋 Riwayat Tebakan</h3>
+
+            <p class="keterangan-riwayat">
+                Berikut adalah angka yang sudah kamu tebak.
+            </p>
 
             <div class="daftar-tebakan">
 
