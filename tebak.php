@@ -11,6 +11,7 @@ $x = $_SESSION['angka'];
 $pesan = "";
 $jenis_pesan = "";
 $jumlah_percobaan = $_SESSION['percobaan'];
+$sisa_kesempatan = 3 - $jumlah_percobaan;
 $game_selesai = false;
 
 if (isset($_POST['tebak'])) {
@@ -29,6 +30,7 @@ if (isset($_POST['tebak'])) {
 
         $percobaan = $_SESSION['percobaan'];
         $jumlah_percobaan = $percobaan;
+        $sisa_kesempatan = 3 - $percobaan;
 
         if ($tebakan == $x) {
 
@@ -68,6 +70,7 @@ if (isset($_POST['main_lagi'])) {
 
     $x = $_SESSION['angka'];
     $jumlah_percobaan = 0;
+    $sisa_kesempatan = 3;
     $pesan = "";
     $jenis_pesan = "";
     $game_selesai = false;
@@ -137,13 +140,27 @@ if (isset($_POST['main_lagi'])) {
             line-height: 1.6;
         }
 
-        .percobaan {
-            background: #eef2ff;
-            padding: 12px;
-            border-radius: 10px;
+        .status-game {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
             margin-bottom: 20px;
+        }
+
+        .status-box {
+            flex: 1;
+            background: #eef2ff;
+            padding: 12px 8px;
+            border-radius: 10px;
             color: #4f46e5;
             font-weight: bold;
+            font-size: 13px;
+        }
+
+        .status-box span {
+            display: block;
+            font-size: 20px;
+            margin-top: 5px;
         }
 
         input {
@@ -236,10 +253,17 @@ if (isset($_POST['main_lagi'])) {
 
     </div>
 
-    <div class="percobaan">
+    <div class="status-game">
 
-        Percobaan:
-        <?php echo $jumlah_percobaan; ?>/3
+        <div class="status-box">
+            Percobaan
+            <span><?php echo $jumlah_percobaan; ?>/3</span>
+        </div>
+
+        <div class="status-box">
+            Kesempatan
+            <span><?php echo $sisa_kesempatan; ?></span>
+        </div>
 
     </div>
 
