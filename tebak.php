@@ -11,6 +11,7 @@ $x = $_SESSION['angka'];
 $pesan = "";
 $jenis_pesan = "";
 $jumlah_percobaan = $_SESSION['percobaan'];
+$game_selesai = false;
 
 if (isset($_POST['tebak'])) {
 
@@ -34,10 +35,7 @@ if (isset($_POST['tebak'])) {
             $pesan = "🎉 Tebakan Anda Benar!<br>
                       Angka yang benar adalah <strong>$x</strong>";
             $jenis_pesan = "benar";
-
-            // Reset game
-            unset($_SESSION['angka']);
-            unset($_SESSION['percobaan']);
+            $game_selesai = true;
 
         } elseif ($percobaan >= 3) {
 
@@ -45,10 +43,7 @@ if (isset($_POST['tebak'])) {
                       Kesempatan Anda sudah habis.<br>
                       Angka yang benar adalah <strong>$x</strong>";
             $jenis_pesan = "salah";
-
-            // Reset game
-            unset($_SESSION['angka']);
-            unset($_SESSION['percobaan']);
+            $game_selesai = true;
 
         } elseif ($tebakan < $x) {
 
@@ -63,6 +58,19 @@ if (isset($_POST['tebak'])) {
             $jenis_pesan = "salah";
         }
     }
+}
+
+// Memulai permainan baru
+if (isset($_POST['main_lagi'])) {
+
+    $_SESSION['angka'] = rand(1, 5);
+    $_SESSION['percobaan'] = 0;
+
+    $x = $_SESSION['angka'];
+    $jumlah_percobaan = 0;
+    $pesan = "";
+    $jenis_pesan = "";
+    $game_selesai = false;
 }
 ?>
 
@@ -186,6 +194,15 @@ if (isset($_POST['tebak'])) {
             color: #991b1b;
         }
 
+        .main-lagi {
+            margin-top: 12px;
+            background: #22c55e;
+        }
+
+        .main-lagi:hover {
+            background: #16a34a;
+        }
+
         .footer {
             margin-top: 20px;
             color: #999;
@@ -226,22 +243,26 @@ if (isset($_POST['tebak'])) {
 
     </div>
 
-    <form method="post">
+    <?php if (!$game_selesai) { ?>
 
-        <input
-            type="number"
-            name="tebak"
-            min="1"
-            max="5"
-            placeholder="Masukkan angka 1 - 5"
-            required
-        >
+        <form method="post">
 
-        <button type="submit">
-            🎲 Tebak Sekarang
-        </button>
+            <input
+                type="number"
+                name="tebak"
+                min="1"
+                max="5"
+                placeholder="Masukkan angka 1 - 5"
+                required
+            >
 
-    </form>
+            <button type="submit">
+                🎲 Tebak Sekarang
+            </button>
+
+        </form>
+
+    <?php } ?>
 
     <?php if ($pesan != "") { ?>
 
@@ -250,6 +271,22 @@ if (isset($_POST['tebak'])) {
             <?php echo $pesan; ?>
 
         </div>
+
+    <?php } ?>
+
+    <?php if ($game_selesai) { ?>
+
+        <form method="post">
+
+            <button
+                type="submit"
+                name="main_lagi"
+                class="main-lagi"
+            >
+                🔄 Main Lagi
+            </button>
+
+        </form>
 
     <?php } ?>
 
