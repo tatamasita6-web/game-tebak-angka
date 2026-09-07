@@ -50,12 +50,16 @@ if (isset($_POST['tebak'])) {
             unset($_SESSION['angka']);
             unset($_SESSION['percobaan']);
 
-        } else {
-
-            $sisa = 3 - $percobaan;
+        } elseif ($tebakan < $x) {
 
             $pesan = "❌ Tebakan Anda Salah!<br>
-                      Anda masih memiliki <strong>$sisa kesempatan</strong>.";
+                      💡 Petunjuk: Angka rahasia <strong>lebih besar</strong>.";
+            $jenis_pesan = "salah";
+
+        } else {
+
+            $pesan = "❌ Tebakan Anda Salah!<br>
+                      💡 Petunjuk: Angka rahasia <strong>lebih kecil</strong>.";
             $jenis_pesan = "salah";
         }
     }
@@ -210,7 +214,8 @@ if (isset($_POST['tebak'])) {
 
         • Angka berada di antara 1–5<br>
         • Kamu memiliki 3 kesempatan<br>
-        • Angka rahasia tidak akan berubah
+        • Angka rahasia tidak akan berubah<br>
+        • Gunakan petunjuk untuk membantu menebak
 
     </div>
 
